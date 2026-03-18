@@ -1,4 +1,6 @@
 import datetime
+import importlib
+import sys
 import time
 
 from django.test import SimpleTestCase
@@ -9,6 +11,23 @@ from django_cryptography.utils.crypto import InvalidAlgorithm
 
 
 class TestSigner(SimpleTestCase):
+    def test_local_b64_helpers_survive_django_removal(self):
+        import django.core.signing as django_signing
+
+        module_name = "django_cryptography.core.signing"
+        module = sys.modules[module_name]
+        original_b64_encode = django_signing.__dict__.pop("b64_encode")
+        original_b64_decode = django_signing.__dict__.pop("b64_decode")
+
+        try:
+            reloaded = importlib.reload(module)
+            self.assertEqual(reloaded.b64_encode(b"hello"), b"aGVsbG8")
+            self.assertEqual(reloaded.b64_decode(b"aGVsbG8"), b"hello")
+        finally:
+            django_signing.b64_encode = original_b64_encode
+            django_signing.b64_decode = original_b64_decode
+            importlib.reload(module)
+
     def test_signature(self):
         """signature() method should generate a signature"""
         signer = signing.Signer("predictable-secret")

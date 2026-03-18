@@ -1,3 +1,4 @@
+import base64
 import json
 import pickle
 
@@ -95,18 +96,18 @@ class TestMigrations(TestCase):
 
 
 class TestSerialization(TestCase):
-    test_data = (
-        (
-            # Python 3.4
-            '[{"fields": {"field": "gANdcQAoSwFLAk5lLg=="}, '
-            '"model": "fields.pickledmodel", "pk": null}]'
-        )
-        if pickle.HIGHEST_PROTOCOL < 5
-        else (
-            # Python 3.8
-            '[{"fields": {"field": "gASVCgAAAAAAAABdlChLAUsCTmUu"}, '
-            '"model": "fields.pickledmodel", "pk": null}]'
-        )
+    test_data = json.dumps(
+        [
+            {
+                "fields": {
+                    "field": base64.b64encode(pickle.dumps([1, 2, None])).decode(
+                        "ascii"
+                    )
+                },
+                "model": "fields.pickledmodel",
+                "pk": None,
+            }
+        ]
     )
 
     def test_dumping(self):

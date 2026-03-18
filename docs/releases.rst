@@ -4,7 +4,9 @@ Releases
 2.0 - master_
 -------------
 
-* Dropped Python 3.6 support
+* Added Django 5.2 and 6.0 support
+* Dropped Django versions older than 4.2
+* Dropped Python versions older than 3.10
 
 1.1 - 2022-04-05
 ----------------

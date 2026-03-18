@@ -131,17 +131,16 @@ class TestChecks(TestCase):
 
     def test_field_checks(self):
         class BadField(models.Model):
-            field = encrypt(models.CharField())
+            field = encrypt(models.DecimalField())
 
             class Meta:
                 app_label = "myapp"
 
         model = BadField()
         errors = model.check()
-        self.assertEqual(len(errors), 1)
-        # The inner CharField is missing a max_length.
-        self.assertEqual("fields.E120", errors[0].id)
-        self.assertIn("max_length", errors[0].msg)
+        self.assertCountEqual(
+            [error.id for error in errors], ["fields.E130", "fields.E132"]
+        )
 
     def test_invalid_base_fields(self):
         class Related(models.Model):

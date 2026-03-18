@@ -4,9 +4,9 @@ Installation
 Requirements
 ------------
 
-* Python_ (3.7, 3.8, 3.9, 3.10, 3.11)
+* Python_ (3.10, 3.11, 3.12, 3.13, 3.14)
 * Cryptography_ (2.0+)
-* Django_ (3.2, 4.1, 4.2)
+* Django_ (4.2, 5.2, 6.0)
 
 .. code-block:: console
 

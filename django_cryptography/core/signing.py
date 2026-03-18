@@ -1,3 +1,4 @@
+import base64
 import binascii
 import datetime
 import struct
@@ -11,8 +12,6 @@ from django.core.signing import (
     BadSignature,
     JSONSerializer,
     SignatureExpired,
-    b64_decode,
-    b64_encode,
     get_cookie_signer,
 )
 from django.utils.encoding import force_bytes
@@ -20,14 +19,7 @@ from django.utils.regex_helper import _lazy_re_compile
 
 from ..typing import Algorithm, Serializer
 from ..utils.crypto import HASHES, InvalidAlgorithm, constant_time_compare, salted_hmac
-
-try:
-    from django.core.signing import b62_decode, b62_encode  # type: ignore
-except ImportError:
-    from django.utils import baseconv
-
-    # Required for Django 3.2 support
-    b62_decode, b62_encode = baseconv.base62.decode, baseconv.base62.encode
+from django.core.signing import b62_decode, b62_encode
 
 __all__ = [
     "BadSignature",
@@ -47,6 +39,15 @@ __all__ = [
 
 _MAX_CLOCK_SKEW = 60
 _SEP_UNSAFE = _lazy_re_compile(r"^[A-z0-9-_=]*$")
+
+
+def b64_encode(value: bytes) -> bytes:
+    return base64.urlsafe_b64encode(value).strip(b"=")
+
+
+def b64_decode(value: Union[bytes, str]) -> bytes:
+    value = force_bytes(value)
+    return base64.urlsafe_b64decode(value + b"=" * (-len(value) % 4))
 
 
 def base64_hmac(
