@@ -10,7 +10,7 @@ Requirements
 
 .. code-block:: console
 
-   pip install django-cryptography
+   uv add django-cryptography
 
 .. _Cryptography: https://cryptography.io/
 .. _Django: https://www.djangoproject.com/

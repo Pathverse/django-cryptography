@@ -1,5 +1,20 @@
-from django.utils.version import get_version
-
 VERSION = (2, 0, 0, "alpha", 0)
 
-__version__ = get_version(VERSION)
+
+def _get_version(version):
+    main = ".".join(str(value) for value in version[:3])
+    stage = version[3]
+    serial = version[4]
+
+    if stage == "final":
+        return main
+
+    suffixes = {
+        "alpha": "a",
+        "beta": "b",
+        "rc": "rc",
+    }
+    return f"{main}{suffixes[stage]}{serial}"
+
+
+__version__ = _get_version(VERSION)

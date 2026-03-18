@@ -1,0 +1,33 @@
+auto_archive_active = true
+
+[prune]
+auto_threshold = 20
+max_cluster_size = 100
+
+[decay]
+half_life_days = 7
+
+[mood]
+default = 0.5
+smoothing = 0.1
+
+[retrieval]
+resistance_threshold = 0.37
+
+[federation]
+enabled_default = false
+dsl_rules = []
+
+[federation.discovery]
+only_dot_pvrclawk = true
+allow_no_git_boundary = false
+max_git_lookup_levels = 10
+candidate_paths = []
+external_roots = []
+
+[federation.scoring]
+root_importance_base = 1.0
+host_relevance_base = 1.0
+root_distance_decay = 0.35
+host_distance_decay = 0.45
+cross_bank_link_weight = 0.3
