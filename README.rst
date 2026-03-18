@@ -8,15 +8,6 @@ Cryptography_ as the backend provider.
 
 Do not forget to read the documentation_.
 
-.. START HIDDEN
-.. image:: https://img.shields.io/github/workflow/status/georgemarshall/django-cryptography/CI/master
-   :target: https://github.com/georgemarshall/django-cryptography/actions/workflows/main.yml
-   :alt: GitHub Workflow Status (branch)
-.. image:: https://img.shields.io/codecov/c/github/georgemarshall/django-cryptography/master
-   :target: https://app.codecov.io/gh/georgemarshall/django-cryptography/branch/master
-   :alt: Codecov branch
-.. END HIDDEN
-
 Cryptography by example
 -----------------------
 
